@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mutere.sufeeds.sufeedsproject.Register">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <VBox style="-fx-background-color: #e0e0e0;-fx-border-color: black; -fx-border-width: 2px; -fx-border-style: solid; -fx-text-fill: white;" maxWidth="300">
+        <padding>
+            <Insets bottom="20.0" left="20.0" top="20.0"/>
+        </padding>
+        <Label>Name</Label>
+        <TextField fx:id="name" maxWidth="200" ></TextField>
+        <Label>Admission number</Label>
+        <TextField fx:id="ad_no" maxWidth="200" ></TextField>
+        <Label>Password</Label>
+        <TextField fx:id="pass" maxWidth="200" ></TextField>
+        <Button onAction="#RegisterButtonClick">Sign up</Button>
+    </VBox>
+</VBox>
+

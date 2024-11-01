@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox alignment="CENTER_LEFT" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mutere.sufeeds.sufeedsproject.Home" style="-fx-background-color: white; -fx-border-color: black;
+      -fx-border-width: 10px; -fx-border-style: solid;">
+    <HBox style="-fx-background-color: #5f5f61;" alignment="TOP_CENTER">
+
+    </HBox>
+    <HBox alignment="CENTER_RIGHT">
+        <padding>
+            <Insets right="120.0" top="120.0" />
+        </padding>
+
+    </HBox>
+    <padding>
+        <Insets bottom="20.0" left="20.0" />
+    </padding>
+
+<VBox alignment="CENTER_LEFT" >
+    <padding>
+        <Insets bottom="20.0" left="120.0" />
+    </padding>
+    <Label style="-fx-font-weight: bold;">Welcome to SU feeds</Label>
+    <Label>Sign in with your admission number</Label>
+    <Label>Make comments, feedback, jokes or summaries based on your topics</Label>
+    <HBox>
+    <Button onAction="#switchtoLogin" maxWidth="200">Sign up</Button>
+    <Button onAction="#switchtoBlog" maxWidth="200">Blog</Button>
+    </HBox>
+</VBox>
+</VBox>
+
+
+
+
