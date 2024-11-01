@@ -1,0 +1,41 @@
+.root{
+    -fx-background-color: white;
+
+}
+
+.label{
+    -fx-font-size: 15;
+    -fx-text-fill: black;
+
+}
+
+.hbox {
+    -fx-background-color: #252626;
+
+
+}
+
+
+.button{
+    -fx-background-color: #5f5f61;
+    -fx-text-fill: black;
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-padding: 8;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-background-radius: 0;
+}
+
+.text-field{
+    -fx-padding: 15;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+}
+
+
+.borderpane{
+    -fx-background-radius: 10;
+    -fx-background-color: gray;
+}
