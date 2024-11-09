@@ -8,16 +8,11 @@
     <artifactId>SUFeedsproject</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>SUFeedsproject</name>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.2</junit.version>
     </properties>
-
-
-
     <dependencies>
-
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -66,7 +61,6 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.10</version>
         </dependency>
-
         <dependency>
             <groupId>org.kordamp.bootstrapfx</groupId>
             <artifactId>bootstrapfx-core</artifactId>

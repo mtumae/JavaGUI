@@ -14,54 +14,40 @@ import java.util.Objects;
 
 
 
-
-
-public class Register extends Dbfunctions {
+public class Register extends Home{
     private Stage stage;
     private Scene scene;
     private Parent root;
 
 
+
     @FXML
     private Label welcomeText;
-    public TextField name, pass, ad_no;
+    public TextField name, ad_no, pass1, pass2;
 
-
-    @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
 
-    @FXML
-    private void RegisterButtonClick(ActionEvent event) throws IOException {
-
+    public void RegisterButtonClick(ActionEvent event) throws IOException {
         //Login validation
-        if (Objects.equals(ad_no.getText(), "") || Objects.equals(pass.getText(), "") || Objects.equals(name.getText(), "") || ad_no.getLength() != 6 || pass.getLength() < 8) {
+        if (Objects.equals(ad_no.getText(), "") || Objects.equals(pass1.getText(), "") || Objects.equals(name.getText(), "") || ad_no.getLength() != 6 || pass1.getLength() < 8){
             System.out.println("Ensure you have entered data into all fields");
-            //REMEMBER TO HAVE ONE DIALOG CLASS AND JUST CALL DIALOG OBJECT INSTEAD OF INSTANTIATING TWICE
-            Dialog<String> dialog = new Dialog<String>();
-            dialog.setTitle("Error");
-            dialog.setContentText("Invalid data! Ensure you have entered all data and");
-            ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
-            dialog.getDialogPane().getButtonTypes().add(type);
-            dialog.show();
-        } else if (ad_no.getLength() == 6 && pass.getLength() >= 8) {
-            System.out.println("Logged user: " + name.getText());
+            message_box("Invalid data! Ensure you have entered correct data into all fields","Try again");
 
+        } else if (!Objects.equals(pass1.getText(), pass2.getText())) {
+            System.out.println("Passwords are not equal");}
+
+        else{
+            System.out.println("Logged user: " + name.getText());
             //DIALOG MESSAGE SUCCESS
-            Dialog<String> dialog = new Dialog<String>();
-            dialog.setTitle("Success");
-            dialog.setContentText("User " + ad_no.getText() + " created");
-            ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
-            dialog.getDialogPane().getButtonTypes().add(type);
-            dialog.show();
+            message_box("User "+ ad_no.getText() +" created", "Ok");
 
             //ADDING DATA TO STUDENT TABLE
             Dbfunctions db = new Dbfunctions();
             Connection conn = db.connect_to_db("db_Mtume_Mutere_188916", "postgres", "");
-            db.insertDataStudents(conn, ad_no.getText(), name.getText(), pass.getText());
-
-
-        }
+            db.insertDataStudents(conn, ad_no.getText(), name.getText(), pass1.getText());
+            switchtoSignin(event);
+        }}
     }
-}
+

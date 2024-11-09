@@ -8,6 +8,8 @@ module com.mutere.sufeeds.sufeedsproject {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
+    requires java.desktop;
+    requires org.postgresql.jdbc;
 
     opens com.mutere.sufeeds.sufeedsproject to javafx.fxml;
     exports com.mutere.sufeeds.sufeedsproject;

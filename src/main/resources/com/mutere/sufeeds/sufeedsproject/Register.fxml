@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -12,18 +8,21 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
-
-    <VBox style="-fx-background-color: #e0e0e0;-fx-border-color: black; -fx-border-width: 2px; -fx-border-style: solid; -fx-text-fill: white;" maxWidth="300">
+    <Label style="-fx-font-size: 25;">Sign up</Label>
+    <VBox style="-fx-background-color: #e0e0e0; -fx-background-radius: 20px; -fx-text-fill: white;" maxWidth="300">
         <padding>
-            <Insets bottom="20.0" left="20.0" top="20.0"/>
+            <Insets right="20.0" bottom="20.0" left="20.0" top="20.0"/>
         </padding>
+
         <Label>Name</Label>
-        <TextField fx:id="name" maxWidth="200" ></TextField>
+        <TextField fx:id="name"  ></TextField>
         <Label>Admission number</Label>
-        <TextField fx:id="ad_no" maxWidth="200" ></TextField>
+        <TextField fx:id="ad_no" ></TextField>
         <Label>Password</Label>
-        <TextField fx:id="pass" maxWidth="200" ></TextField>
-        <Button onAction="#RegisterButtonClick">Sign up</Button>
+        <TextField fx:id="pass1"></TextField>
+        <Label>Password confirmation</Label>
+        <TextField fx:id="pass2"></TextField>
+        <Button onAction="#RegisterButtonClick">Register</Button>
     </VBox>
 </VBox>
 
