@@ -31,10 +31,10 @@ public class Signin extends Home{
     }
 
 
-    public void Blog(ActionEvent event) throws IOException {
+    public void Blog(ActionEvent event, String ad_no) throws IOException {
         Dbfunctions db = new Dbfunctions();
         Connection conn = db.connect_to_db("db_Mtume_Mutere_188916", "postgres", "");
-        db.returnPosts(conn, event);
+        db.returnPosts(conn, event, ad_no);
     }
 
 

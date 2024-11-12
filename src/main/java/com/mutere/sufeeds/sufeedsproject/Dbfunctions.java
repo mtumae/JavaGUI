@@ -1,5 +1,7 @@
 package com.mutere.sufeeds.sufeedsproject;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+
 import java.util.ArrayList;
 import java.sql.*;
 import java.util.Objects;
@@ -42,13 +44,15 @@ public class Dbfunctions extends Home{
     }
 
     //CREATE
-    public void createPost(Connection conn, String ad_no, String topic, String course, String comment, String unit ) {
+    public void createPost(Connection conn, String ad_no, String topic, String course, String comment, String unit, ActionEvent event) {
         Statement statement;
         try {
-            String query = "insert into Posts values('" + ad_no + "', '" + topic + "',, '" + course + "' , '" + comment + "', '" + unit + "', current_date);";
+            String query = "insert into Posts values('" + ad_no + "', '" + topic + "', '" + course + "', '" + comment + "', '" + unit + "', current_date);";
             statement = conn.createStatement();
             statement.executeUpdate(query);
             System.out.println("Data saved successfully!");
+            message_box("Post created!","Ok");
+            retrieve_User_Posts(conn, ad_no, event);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -102,7 +106,7 @@ public class Dbfunctions extends Home{
 
 
     //READ
-    public void returnPosts(Connection conn, ActionEvent event){
+    public void returnPosts(Connection conn, ActionEvent event, String ad_no){
         ArrayList<String> posts = new ArrayList<>();
         ArrayList<String> posts_metadata = new ArrayList<>();
         ArrayList<String> posts_topic = new ArrayList<>();
@@ -118,7 +122,7 @@ public class Dbfunctions extends Home{
                 posts_topic.add(result.getString("topic"));
             }
 
-            switchtoBlog(posts, posts_metadata, posts_topic, event);
+            switchtoBlog(posts, posts_metadata, posts_topic, ad_no, event);
 
         }catch (Exception e){
             System.out.println(e);

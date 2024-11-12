@@ -28,7 +28,8 @@
         <Button style="-fx-background-color: #e0e0e0" onAction="#switchtoRegister" maxWidth="300">Dont have an account? Sign up</Button>
         <Button onAction="#SigninButtonClick" maxWidth="300">Sign in</Button>
     </VBox>
-    <Button onAction="#Blog">Blog</Button>
+
+
 
 </VBox>
 </VBox>

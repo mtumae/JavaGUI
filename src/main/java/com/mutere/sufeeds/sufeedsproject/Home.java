@@ -38,23 +38,26 @@ public class Home extends Application {
         dialog.show();
     }
 
-    public void switchtoBlog(ArrayList<String> posts, ArrayList<String> posts_metadata, ArrayList<String> posts_topics, ActionEvent event) throws IOException {;
+    public void switchtoBlog(ArrayList<String> posts, ArrayList<String> posts_metadata, ArrayList<String> posts_topics, String ad_no, ActionEvent event) throws IOException {;
         VBox layout = new VBox(20);
         HBox dashboard = new HBox(10);
         HBox dash = new HBox(20);
 
         //Nav bar
-        Button button1 = new Button("Home");
-        Button button2 = new Button("Post");
-        Button button3 = new Button();
 
-        dash.getChildren().addAll(button1, button2, button3);
+        Button button2 = new Button("Post");
+        Button button3 = new Button(ad_no);
+
+
+
+        button2.setStyle("-fx-background-color: white;");
+        button3.setStyle("-fx-background-color: #0c2e8a; -fx-text-fill: #e0e0e0;");
+        button3.setMaxWidth(200);
+        dash.getChildren().addAll(button2, button3);
         dash.setAlignment(Pos.TOP_CENTER);
         layout.getChildren().add(dash);
-        //layout.getChildren().add(dashboard);
 
         dashboard.setAlignment(Pos.TOP_CENTER);
-        //dashboard.setPadding(new Insets(100));
         layout.setPadding(new Insets(100));
 
         dashboard.setStyle("-fx-font-size: 25;");
@@ -69,8 +72,6 @@ public class Home extends Application {
         childVBox.setPadding(new Insets(20));
         childVBox.setPrefWidth(1100);
         layout.getChildren().add(childVBox);
-
-
 
 
         for (int i=0; i<posts.toArray().length; i++){
@@ -95,7 +96,6 @@ public class Home extends Application {
 
         }
 
-
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMaxWidth(1200);
         scrollPane.setMaxHeight(500);
@@ -115,49 +115,35 @@ public class Home extends Application {
 
     public void switchtoAccount(ActionEvent event, String ad_no, ArrayList<String> user_posts_comment, ArrayList<String> user_posts_topic) throws IOException{
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        //Account Page
         VBox layout = new VBox(20);
 
-        //profile image for button
-        //FileInputStream inputstream = new FileInputStream("url=@../sufeedsproject/profile.png");
-        Image prof = new Image(getClass().getResourceAsStream("profile.png"));
+        Image prof = new Image(getClass().getResourceAsStream("profile4.png"));
         ImageView imageView = new ImageView(prof);
 
         HBox dashboard = new HBox(20);
         HBox dash = new HBox(20);
-        //Label page = new Label("Account");
+
         layout.setPadding(new Insets(20));
         dash.setAlignment(Pos.TOP_CENTER);
         dashboard.setAlignment(Pos.CENTER);
-        //layout.setAlignment(Pos.CENTER);
-        //dash.setPrefWidth(200);
+
 
         //dash
-        Button button1 = new Button("Home");
+        Button button1 = new Button("Logout");
         Button button2 = new Button("Blog");
         Button button3 = new Button(ad_no);
+        Button logout = new Button("Logout");
 
         button3.setGraphic(imageView);
         imageView.setFitWidth(20);
         imageView.setFitHeight(20);
-        button1.setStyle("-fx-background-color: white;");
         button2.setStyle("-fx-background-color: white;");
         button3.setStyle("-fx-background-color: #0c2e8a; -fx-text-fill: #e0e0e0;");
         dash.setStyle("-fx-background-colour: black; -fx-border-radius: 50px; -fx-font-size: 25;");
-
-        button1.setOnAction(e->{
-            System.out.println("Home button pressed...");
-            try {
-                switchtoHome(e);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
         button2.setOnAction(e -> {
             Dbfunctions db = new Dbfunctions();
             Connection conn = db.connect_to_db("db_Mtume_Mutere_188916", "postgres", "");
-            db.returnPosts(conn, e);
+            db.returnPosts(conn, e, ad_no);
         });
 
         button3.setOnAction(e->{
@@ -165,15 +151,15 @@ public class Home extends Application {
         });
 
         layout.getChildren().add(dash);
-        dash.getChildren().addAll(button1, button2, button3);
+        dash.getChildren().addAll(button2, button3);
 
+        //BOX FOR USER COMMENTS
         VBox childVBox = new VBox(30);
-        dashboard.getChildren().add(childVBox);
-
         childVBox.setStyle("-fx-pref-width: 200; -fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #e0e0e0;-fx-border-color: #e0e0e0; -fx-border-width: 1px; -fx-border-style: solid; -fx-text-fill: white;");
         childVBox.setPadding(new Insets(50));
-        childVBox.setPrefWidth(500);
+        childVBox.setPrefWidth(800);
         childVBox.setPrefHeight(300);
+        dashboard.getChildren().add(childVBox);
 
         if(user_posts_comment.toArray().length == 0){
             Text text_error = new Text("No posts yet...");
@@ -228,8 +214,8 @@ public class Home extends Application {
         username.setAlignment(Pos.CENTER);
         TextField topic = new TextField("Topic");
         TextField unit = new TextField("Unit");
+        TextField course = new TextField("Course");
         TextField comment = new TextField("Comment");
-        Button logout = new Button("Logout");
         Button post = new Button("Post");
 
 
@@ -240,25 +226,38 @@ public class Home extends Application {
                 throw new RuntimeException(ex);
             }
         });
+
         post.setOnAction(e -> {
             Dbfunctions db = new Dbfunctions();
             Connection conn = db.connect_to_db("db_Mtume_Mutere_188916", "postgres", "");
-            db.returnPosts(conn, e);
+            db.createPost(conn, ad_no, topic.getText(), course.getText(), comment.getText(), unit.getText(), e);
         });
 
+
+        //USER POST BOX
         comment.setPrefHeight(200);
         post.setMaxWidth(300);
-        user.getChildren().addAll(username, unit, topic, comment, post);
+        user.setMaxHeight(200);
+        user.setPrefWidth(400);
         username.setStyle("-fx-font-weight: bold; -fx-font-size: 20");
         user.setStyle("-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #e0e0e0; -fx-border-color: #e0e0e0; -fx-border-width: 1px; -fx-border-style: solid;");
         user.setPadding(new Insets(50));
 
-        user.setPrefHeight(200);
-        user.setPrefWidth(400);
+
+        user.getChildren().addAll(username, unit, topic, course, comment, post);
         dashboard.getChildren().add(user);
         layout.getChildren().add(dashboard);
 
-        scene = new Scene(layout, 320,240);
+        //SCROLLBAR FOR THE POST BOX
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(childVBox);
+        scrollPane.setStyle("-fx-border-width: 0; -fx-background-color: #e0e0e0; -fx-background-radius: 30;");
+        scrollPane.setFitToHeight(true);
+        scrollPane.setPrefWidth(500);
+        dashboard.getChildren().add(scrollPane);
+
+
+        Scene scene = new Scene(layout);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
@@ -317,7 +316,7 @@ public class Home extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         //change name to home
-        FXMLLoader fxmlLoader = new FXMLLoader(Home.class.getResource("Signin.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Home.class.getResource("Home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setTitle("SUFeeds");

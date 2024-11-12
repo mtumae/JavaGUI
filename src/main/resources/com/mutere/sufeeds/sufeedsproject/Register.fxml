@@ -22,7 +22,8 @@
         <TextField fx:id="pass1"></TextField>
         <Label>Password confirmation</Label>
         <TextField fx:id="pass2"></TextField>
-        <Button onAction="#RegisterButtonClick">Register</Button>
+        <Button style="-fx-background-color: #e0e0e0" onAction="#switchtoSignin" maxWidth="300">Already have an account? Sign in</Button>
+        <Button onAction="#RegisterButtonClick" maxWidth="300">Register</Button>
     </VBox>
 </VBox>
 

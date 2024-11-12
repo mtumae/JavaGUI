@@ -23,9 +23,11 @@
 
 
 .label{
-    -fx-font-style: bold;
+    -fx-font-weight: bold;
     -fx-font-size: 20;
 }
+
+
 .button{
     -fx-background-color: #5f5f61;
     -fx-text-fill: black;
