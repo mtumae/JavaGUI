@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.image.Image;
@@ -21,7 +22,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
-
 
 
 public class Home extends Application {
@@ -38,86 +38,12 @@ public class Home extends Application {
         dialog.show();
     }
 
-    public void switchtoBlog(ArrayList<String> posts, ArrayList<String> posts_metadata, ArrayList<String> posts_topics, String ad_no, ActionEvent event) throws IOException {;
-        VBox layout = new VBox(20);
-        HBox dashboard = new HBox(10);
-        HBox dash = new HBox(20);
-
-        //Nav bar
-
-        Button button2 = new Button("Post");
-        Button button3 = new Button(ad_no);
-
-
-
-        button2.setStyle("-fx-background-color: white;");
-        button3.setStyle("-fx-background-color: #0c2e8a; -fx-text-fill: #e0e0e0;");
-        button3.setMaxWidth(200);
-        dash.getChildren().addAll(button2, button3);
-        dash.setAlignment(Pos.TOP_CENTER);
-        layout.getChildren().add(dash);
-
-        dashboard.setAlignment(Pos.TOP_CENTER);
-        layout.setPadding(new Insets(100));
-
-        dashboard.setStyle("-fx-font-size: 25;");
-
-
-        Label blog_label = new Label("Blog");
-        blog_label.setStyle("-fx-font-weight: bold; -fx-font-size: 20;");
-
-
-        VBox childVBox = new VBox(10);
-        childVBox.setStyle("-fx-background-color: #e0e0e0; -fx-background-radius: 30;");
-        childVBox.setPadding(new Insets(20));
-        childVBox.setPrefWidth(1100);
-        layout.getChildren().add(childVBox);
-
-
-        for (int i=0; i<posts.toArray().length; i++){
-            System.out.println(posts_metadata.get(i));
-            System.out.println(posts.get(i));
-            System.out.println(posts_topics.get(i));
-            //VBox childVBox = new VBox(10);
-            VBox container = new VBox();
-            Text text = new Text(posts.get(i));
-            Label label1 = new Label(posts_topics.get(i));
-            Label label2 = new Label(posts_metadata.get(i));
-            text.setStyle("-fx-font-size: 18; -fx-text-fill: black;");
-            label1.setStyle("-fx-font-weight: bold; -fx-font-size: 15; -fx-text-fill: black;");
-            label2.setStyle("-fx-font-size: 15; -fx-text-fill: gray;");
-
-            container.getChildren().add(label1);
-            container.getChildren().add(text);
-            container.getChildren().add(label2);
-            container.setStyle("-fx-background-color: #cccccc; -fx-background-radius: 30;");
-            container.setPadding(new Insets(20));
-            childVBox.getChildren().add(container);
-
-        }
-
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setMaxWidth(1200);
-        scrollPane.setMaxHeight(500);
-        scrollPane.setContent(childVBox);
-
-        scrollPane.setStyle("-fx-border-width: 0; -fx-background-color: #e0e0e0; -fx-background-radius: 30;");
-
-        scrollPane.setFitToHeight(true);
-        layout.getChildren().add(scrollPane);
-        Scene scene = new Scene(layout);
-        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.setMaximized(true);
-        stage.show();
-    }
-
     public void switchtoAccount(ActionEvent event, String ad_no, ArrayList<String> user_posts_comment, ArrayList<String> user_posts_topic) throws IOException{
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
         VBox layout = new VBox(20);
 
-        Image prof = new Image(getClass().getResourceAsStream("profile4.png"));
+        Image prof = new Image(getClass().getResourceAsStream("profile.png"));
         ImageView imageView = new ImageView(prof);
 
         HBox dashboard = new HBox(20);
@@ -126,7 +52,6 @@ public class Home extends Application {
         layout.setPadding(new Insets(20));
         dash.setAlignment(Pos.TOP_CENTER);
         dashboard.setAlignment(Pos.CENTER);
-
 
         //dash
         Button button1 = new Button("Logout");
@@ -148,6 +73,11 @@ public class Home extends Application {
 
         button3.setOnAction(e->{
             System.out.println("Blank button pressed...");
+            try {
+                switchtoSignin(e);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         layout.getChildren().add(dash);
@@ -187,10 +117,26 @@ public class Home extends Application {
 
             btn2.setOnAction(e -> {
                 try {
-                    System.out.println("Editing...."+user_posts_comment.get(finalI));
-                    Dbfunctions db = new Dbfunctions();
-                    Connection conn = db.connect_to_db("db_Mtume_Mutere_188916", "postgres", "");
-                    db.edit_post(conn, user_posts_comment.get(finalI), "mtume", event);
+                    System.out.println("Editing..."+user_posts_comment.get(finalI)+" for "+ad_no);
+                    Dialog<String> dialog = new Dialog<String>();
+                    dialog.setTitle("Edit your comment");
+                    TextField edit_comment = new TextField("Enter new comment");
+
+                    dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+                    dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+                    dialog.getDialogPane().setContent(edit_comment);
+                    dialog.setResultConverter(dialogButton -> {
+                        if (dialogButton == ButtonType.OK) {
+                            return edit_comment.getText();
+                        }
+                        return null;
+                    });
+                    dialog.showAndWait().ifPresent(result -> {
+                        System.out.println(result);
+                        Dbfunctions db = new Dbfunctions();
+                        Connection conn = db.connect_to_db("db_Mtume_Mutere_188916", "postgres", "");
+                        db.edit_post(conn, user_posts_comment.get(finalI), edit_comment.getText(), ad_no, event);
+                    });
                 } catch (Exception f) {
                     System.out.println(f);
                 }
@@ -271,7 +217,7 @@ public class Home extends Application {
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
-    }
+    };
 
     public void switchtoPost(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Post.fxml"));
@@ -280,7 +226,7 @@ public class Home extends Application {
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
-    }
+    };
 
     public void switchtoSignin(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Signin.fxml"));
@@ -328,5 +274,6 @@ public class Home extends Application {
     public static void main(String[] args) {
         launch();
     }
+
 }
 
