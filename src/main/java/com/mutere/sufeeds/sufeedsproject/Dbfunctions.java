@@ -1,7 +1,5 @@
 package com.mutere.sufeeds.sufeedsproject;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-
 import java.util.ArrayList;
 import java.sql.*;
 import java.util.Objects;
@@ -122,7 +120,8 @@ public class Dbfunctions extends Home{
                 posts_topic.add(result.getString("topic"));
             }
 
-            switchtoBlog(posts, posts_metadata, posts_topic, ad_no, event);
+            Blog blog = new Blog();
+            blog.switchtoBlog(posts, posts_metadata, posts_topic, ad_no, event);
 
         }catch (Exception e){
             System.out.println(e);
@@ -152,14 +151,16 @@ public class Dbfunctions extends Home{
 
 
     //UPDATE
-    public void edit_post(Connection conn, String comment, String comment_update, ActionEvent event){
+    public void edit_post(Connection conn, String comment, String comment_update, String ad_no, ActionEvent event){
         Statement statement;
         try {
-            String query = "update Posts set comment='"+comment_update+"' where comment='"+comment+"';";
+            String query = "update Posts set comment='"+comment_update+"' where comment='"+comment+"' and ad_no='"+ad_no+"';";
             statement = conn.createStatement();
             statement.executeUpdate(query);
             System.out.println("Successfully edited Post!");
             message_box("Succesfully edited post!","Ok");
+            retrieve_User_Posts(conn, ad_no, event);
+
 
         } catch (Exception e) {
             System.out.println("EDIT aborted: "+e);

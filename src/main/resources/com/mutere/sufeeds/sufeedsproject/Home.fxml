@@ -28,6 +28,8 @@
         </padding>
     <Button onAction="#switchtoRegister" maxWidth="200" styleClass="button-for-home">Sign up</Button>
     <Button onAction="#switchtoSignin" maxWidth="200" styleClass="button-for-home">Sign in</Button>
+
+
     </HBox>
 </VBox>
 
