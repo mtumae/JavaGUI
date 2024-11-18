@@ -3,6 +3,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.mutere.sufeeds.sufeedsproject.Register">
     <padding>
@@ -13,17 +14,18 @@
         <padding>
             <Insets right="20.0" bottom="20.0" left="20.0" top="20.0"/>
         </padding>
-
         <Label>Name</Label>
         <TextField fx:id="name"  ></TextField>
         <Label>Admission number</Label>
         <TextField fx:id="ad_no" ></TextField>
         <Label>Password</Label>
-        <TextField fx:id="pass1"></TextField>
+        <PasswordField fx:id="pass1"></PasswordField>
         <Label>Password confirmation</Label>
-        <TextField fx:id="pass2"></TextField>
+        <PasswordField fx:id="pass2"></PasswordField>
         <Button style="-fx-background-color: #e0e0e0" onAction="#switchtoSignin" maxWidth="300">Already have an account? Sign in</Button>
         <Button onAction="#RegisterButtonClick" maxWidth="300">Register</Button>
+        <Text  style="-fx-font-size: 10;">Mtume Owino ©</Text>
     </VBox>
+
 </VBox>
 
