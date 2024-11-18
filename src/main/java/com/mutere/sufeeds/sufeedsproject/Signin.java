@@ -24,18 +24,13 @@ public class Signin extends Home{
 
 
     public void SigninButtonClick(ActionEvent event) throws IOException {
-        //VALIDATION
+        //PUT VALIDATION HERE PLEASE
         Dbfunctions db = new Dbfunctions();
         Connection conn = db.connect_to_db("db_Mtume_Mutere_188916", "postgres", "");
         db.check_Student_ad_no(conn, event, ad_no.getText(), pass.getText());
+
     }
 
-
-    public void Blog(ActionEvent event, String ad_no) throws IOException {
-        Dbfunctions db = new Dbfunctions();
-        Connection conn = db.connect_to_db("db_Mtume_Mutere_188916", "postgres", "");
-        db.returnPosts(conn, event, ad_no);
-    }
 
 
 }

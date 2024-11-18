@@ -50,7 +50,8 @@ public class Dbfunctions extends Home{
             statement.executeUpdate(query);
             System.out.println("Data saved successfully!");
             message_box("Post created!","Ok");
-            retrieve_User_Posts(conn, ad_no, event);
+            //retrieve_User_Posts(conn, ad_no, event);
+            returnPosts(conn, event, ad_no);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -74,29 +75,12 @@ public class Dbfunctions extends Home{
                 System.out.println(exists+" User exists but password is not correct");
                 System.out.println(pass+" should equal "+result.getString("password")+" is your password");
                 message_box("Password is incorrect","Try again");
-
                 }
             }
             else{
                 System.out.println(exists+" User does not exist");
                 message_box("User does not exist. Try again!","Ok");
             }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-
-    //READ
-    public void retrieveUser(Connection conn, String ad_no) {
-        Statement statement;
-        try {
-            String query = "select * from Students where ad_no='" + ad_no + "' limit 1;";
-            statement = conn.createStatement();
-            ResultSet result = statement.executeQuery(query);
-            while(result.next()) {
-                System.out.println("User retrieved! " + result.getString("name"));
-            };
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -123,6 +107,7 @@ public class Dbfunctions extends Home{
             Blog blog = new Blog();
             blog.switchtoBlog(posts, posts_metadata, posts_topic, ad_no, event);
 
+
         }catch (Exception e){
             System.out.println(e);
         }
@@ -132,16 +117,27 @@ public class Dbfunctions extends Home{
     public void retrieve_User_Posts(Connection conn, String ad_no, ActionEvent event){
         ArrayList<String> user_posts_comment = new ArrayList<>();
         ArrayList<String> user_posts_topic = new ArrayList<>();
+        ArrayList<String> user_posts_unit = new ArrayList<>();
         Statement statement;
         try {
             String query = "select * from Posts where ad_no='"+ ad_no+"';";
             statement = conn.createStatement();
             ResultSet result = statement.executeQuery(query);
-            while(result.next()){
-                System.out.println(result.getString("topic"));
-                user_posts_topic.add(result.getString("topic"));
-                user_posts_comment.add(result.getString("comment"));
-            }switchtoAccount(event, ad_no, user_posts_comment, user_posts_topic);
+            if(!result.isBeforeFirst()){
+                System.out.println("No posts currently");
+                switchtoPost(event, ad_no);
+            }
+            else{
+                while(result.next()){
+                    System.out.println(result.getString("unit"));
+                    user_posts_topic.add(result.getString("topic"));
+                    user_posts_comment.add(result.getString("comment"));
+                    user_posts_unit.add(result.getString("unit"));
+                }
+                switchtoAccount(event, ad_no, user_posts_comment, user_posts_topic, user_posts_unit);
+            }
+
+
 
         }catch (Exception e){
             System.out.println(e);
@@ -149,25 +145,24 @@ public class Dbfunctions extends Home{
 
     }
 
-
     //UPDATE
-    public void edit_post(Connection conn, String comment, String comment_update, String ad_no, ActionEvent event){
+    public void edit_post(Connection conn, String comment, String comment_update, String ad_no, ActionEvent event) {
         Statement statement;
         try {
-            String query = "update Posts set comment='"+comment_update+"' where comment='"+comment+"' and ad_no='"+ad_no+"';";
+            String query = "update Posts set comment='" + comment_update + "' where comment='" + comment + "' and ad_no='" + ad_no + "';";
             statement = conn.createStatement();
             statement.executeUpdate(query);
             System.out.println("Successfully edited Post!");
-            message_box("Succesfully edited post!","Ok");
+            message_box("Succesfully edited post!", "Ok");
             retrieve_User_Posts(conn, ad_no, event);
 
 
         } catch (Exception e) {
-            System.out.println("EDIT aborted: "+e);
+            System.out.println("EDIT aborted: " + e);
             System.out.println(e);
         }
-
     }
+
 
     //DELETE
     public void delete_post(Connection conn, String comment, ActionEvent event){

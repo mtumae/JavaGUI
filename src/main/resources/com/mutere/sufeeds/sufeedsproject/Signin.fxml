@@ -9,6 +9,7 @@
         <?import javafx.scene.layout.HBox?>
         <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
 <VBox alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.mutere.sufeeds.sufeedsproject.Signin">
 <padding>
@@ -22,15 +23,13 @@
     <Label style="-fx-font-size: 15;">Admission Number</Label>
     <TextField fx:id="ad_no"></TextField>
     <Label style="-fx-font-size: 15;">Password</Label>
-    <TextField fx:id="pass"></TextField>
+    <PasswordField fx:id="pass"></PasswordField>
 
     <VBox alignment="CENTER">
         <Button style="-fx-background-color: #e0e0e0" onAction="#switchtoRegister" maxWidth="300">Dont have an account? Sign up</Button>
         <Button onAction="#SigninButtonClick" maxWidth="300">Sign in</Button>
     </VBox>
-
-
-
+    <Text>Mtume Owino ©</Text>
 </VBox>
 </VBox>
 

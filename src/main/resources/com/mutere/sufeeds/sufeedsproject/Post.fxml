@@ -7,21 +7,30 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
-<GridPane xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:controller="com.mutere.sufeeds.sufeedsproject.Post" alignment="center" hgap="10" vgap="10" >
+<VBox alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mutere.sufeeds.sufeedsproject.Post">
     <padding>
-        <Insets top="25" right="25" bottom="25" left="25"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
+    <Label style="-fx-font-size: 25;">Make your first post!</Label>
+    <VBox spacing="5.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #e0e0e0;-fx-border-color: #e0e0e0; -fx-border-width: 1px; -fx-border-style: solid; -fx-text-fill: white;" maxWidth="300">
+        <padding>
+            <Insets right="20.0" bottom="20.0" left="20.0" top="20.0"/>
+        </padding>
+        <Label>Admission number</Label>
+        <TextField fx:id="ad_no"></TextField>
+        <Label>Topic</Label>
+        <TextField fx:id="topic"></TextField>
+        <Label>Course</Label>
+        <TextField fx:id="course"></TextField>
+        <Label>Unit</Label>
+        <TextField fx:id="unit"></TextField>
+        <Label>Comment</Label>
+        <TextArea fx:id="comment"></TextArea>
 
-    <Label text="Enter your admission number" GridPane.columnIndex="0" GridPane.rowIndex="0"
-           GridPane.columnSpan="2"/>
-    <Label text="Enter a comment" GridPane.columnIndex="0" GridPane.rowIndex="0"
-           GridPane.columnSpan="2"/>
-    <Label text="Enter a topic" GridPane.columnIndex="0" GridPane.rowIndex="0"
-           GridPane.columnSpan="2"/>
-    <TextArea text="I learnt alot in the last lesson..." GridPane.columnIndex="1" GridPane.rowIndex="2"
-              GridPane.columnSpan="2"/>
-    <Button text="Post" GridPane.columnIndex="1" GridPane.rowIndex="3"
-            GridPane.columnSpan="1" />
-</GridPane>
+        <VBox alignment="CENTER">
+            <Button onAction="#PostButtonClick" maxWidth="300">Post</Button>
+        </VBox>
+
+    </VBox>
+</VBox>
